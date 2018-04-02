@@ -6,5 +6,6 @@ Timing convention used in this demonstration are as follows:
 + Two words are separated by a gap equal to 7 dots.
 
 **To avoid ambiguity each dot is set to 50ms.**
+
 The time interval to regenerate the message is set to 7 dots, equal to the time interval between words.
 

@@ -1,6 +1,6 @@
 '''
 This module generates an SOS message in Morse code on an LED. 
-The message is controlled with a switch mapped to pin number 14
+The message is controlled with a switch mapped to pin number 23
 
 Timing convention used in this demonstration are as follows: 
     - Each dot/dash is followed by a gap equal to 1 dot duration. 
@@ -20,8 +20,8 @@ DOT = 0.05
 DASH = DOT * 3
 SPACE = DOT * 7
 
-switch = 14
-led = 15
+switch = 16
+led = 18
 system = False
 
 def init():
@@ -45,10 +45,18 @@ def big_gap():
     GPIO.output(led, GPIO.LOW)
     time.sleep(SPACE)
 def letter_s():
-    a_dot() a_dot() a_dot() char_gap()
+    a_dot() 
+    a_dot() 
+    a_dot() 
+    char_gap()
 def letter_o():
-    a_dash() a_dash() a_dash() char_gap()
-def toggle():
+    a_dash() 
+    a_dash() 
+    a_dash() 
+    char_gap()
+def toggle(my_led):
+    global system
+    print "pressed"
     system = system ^ True
 def main():
     init()
