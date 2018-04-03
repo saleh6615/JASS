@@ -1,6 +1,6 @@
 '''
 This module generates an SOS message in Morse code on an LED. 
-The message is controlled with a switch mapped to pin number 23
+The message is controlled with a switch mapped to pin number 16
 
 Timing convention used in this demonstration are as follows: 
     - Each dot/dash is followed by a gap equal to 1 dot duration. 
@@ -18,8 +18,7 @@ GPIO.setmode(GPIO.BOARD)        # please refer to the wiki page  for
                                 # more info on the mapping methods  https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/
 DOT = 0.05
 DASH = DOT * 3
-SPACE = DOT * 7
-
+SPACE = DOT * 6                 # notice space gap is 6 because we already defined a dot gap between after each Morse char(dot/dash) 
 switch = 16
 led = 18
 system = False
