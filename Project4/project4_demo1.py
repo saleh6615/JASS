@@ -18,7 +18,9 @@ GPIO.setmode(GPIO.BOARD)        # please refer to the wiki page  for
                                 # more info on the mapping methods  https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/
 DOT = 0.05
 DASH = DOT * 3
-SPACE = DOT * 6                 # notice space gap is 6 because we already defined a dot gap between after each Morse char(dot/dash) 
+SPACE = DOT * 6                 # notice space gap is 6 because we already defined a dot gap after each Morse char(dot/dash) 
+CHAR = DOT * 2                  # same for gap between each character in a word
+
 switch = 16
 led = 18
 system = False
@@ -39,7 +41,7 @@ def a_dash():
     time.sleep(DOT)
 def char_gap():                         #time interval between each character -> 3 dots
     GPIO.output(led, GPIO.LOW)
-    time.sleep(DASH)
+    time.sleep(CHAR)
 def big_gap():
     GPIO.output(led, GPIO.LOW)
     time.sleep(SPACE)
