@@ -2,3 +2,4 @@
 *.swo
 /credentials
 lock_code_c.py
+/node_modules
