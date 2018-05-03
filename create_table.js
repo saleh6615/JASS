@@ -5,16 +5,17 @@ var AWS = require('aws-sdk');
 AWS.config.update({region: "us-east-2"})
 ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'});
 
-var users_schema = {
-	AttributeDefinitions:[
-	 	{
-			AttributeName: "USER_ID",
-			AttributeType: "N"
-	 	},
+var users_table = {
+	TableName : "USER_PERMISSIONS",
+	AttributeDefinitions: [
+		{
+			AttributeName: "USERNAME",
+			AttributeType: "S"
+		}
 	],
 	KeySchema: [
 		{
-			AttributeName: "USER_ID",
+			AttributeName: "USERNAME",
 			KeyType: "HASH"
 		}
 	],
@@ -22,33 +23,52 @@ var users_schema = {
 		ReadCapacityUnits: 1, 
 		WriteCapacityUnits: 1
 	},
-	TableName: "LOCK_USERS",
 	StreamSpecification: {
 		StreamEnabled: false
 	}
-};
+}
+var access_table = {
+	TableName: "ACCESS_HISTORY",
+	AttributeDefinitions: [
+		{
+			AttributeName: "AID",
+			AttributeType: "N"
+		}
+	],
+	AttributeDefinitions: [
+		{
+			AttributeName: "USERNAME",
+			AttributeType: "S"
+		}
+	],
+	KeySchema: [
+		{
+			AttributeName: "AID",
+			KeyType: "HASH"
+		},
+		{
+			AttributeName: "USERNAME",
+			KeyType: "RANGE"
+		}	
+	],
+	ProvisionedThroughput: {
+		ReadCapacityUnits: 1, 
+		WriteCapacityUnits: 1
+	},
+	StreamSpecification: {
+		StreamEnabled: false
+	}
+}
 
-ddb.createTable(users_schema, function(err, data){
+ddb.createTable(access_table, function(err, data){
 	if(err)
 		console.log("Error", err)
 	else 
-		console.log("Table has been created successfully:\n", data)
+		console.log("Access table has been created successfully:\n", data)
 });
-/*
-// Create an S3 client
-var s3 = new AWS.S3();
-
-// Create a bucket and upload something into it
-var bucketName = 'node-sdk-sample-' + uuid.v4();
-var keyName = 'hello_world.txt';
-
-s3.createBucket({Bucket: bucketName}, function() {
-  var params = {Bucket: bucketName, Key: keyName, Body: 'Hello World!'};
-  s3.putObject(params, function(err, data) {
-    if (err)
-      console.log(err)
-    else
-      console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-  });
+/*ddb.createTable(users_table, function(err, data){
+	if(err)
+		console.log("Error", err)
+	else 
+		console.log("Users table has been created successfully:\n", data)
 }); */
-
